@@ -3,6 +3,13 @@
  */
 package com.ads;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+
+
 /**
  * @author gnewby
  *
@@ -45,7 +52,45 @@ public class WordShuffle {
 
 	public static void main(String[] args) {
 	
-		System.out.println(isLegitimate("TOURNAMENT DINNER DINTOUR"));
+		
+			String data = null;
+			
+				try {
+					
+					if(args.length == 1) {					//PATH IF FILE NAME IS ENTERED AT CLI
+						
+						BufferedReader reader = new BufferedReader(new FileReader(args[0]));
+						data = reader.readLine();
+						while(reader.readLine() != null) {
+							data.concat(reader.readLine());
+						}
+						
+						String outToFile = new Boolean(isLegitimate(data)).toString();
+						FileWriter fw = new FileWriter("output.txt");
+						fw.write(outToFile);
+						fw.close();
+							
+					} else if (args.length == 3) {			//PATH IF THREE ENTRIES ARE ENTERED AT CLI
+						String input = args[0] + " " + args[1] + " " + args[2];
+						
+						System.out.println(isLegitimate(input));
+						
+						String outToFile = new Boolean(isLegitimate(input)).toString();
+						FileWriter fw = new FileWriter("output.txt");
+						fw.write(outToFile);
+						fw.close();
+						
+						
+					} else {		//ERROR MESSAGE/INSTRUCTIONS
+						System.out.println("When running the program enter either the input file name as a command line argument or "
+								+ "three entries seperated by spaces to check if they are a legitimate shuffle group");
+					}
+					
+				} catch (IOException e) {
+					
+					e.printStackTrace();
+				}	
+		
 	}
 
 }

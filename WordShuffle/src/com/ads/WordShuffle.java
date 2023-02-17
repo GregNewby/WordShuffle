@@ -52,23 +52,21 @@ public class WordShuffle {
 
 	public static void main(String[] args) {
 	
-		
+			if(args.length > 0) {
+				
 			String data = null;
 			
-				try {
+				try (BufferedReader reader = new BufferedReader(new FileReader(args[0]));FileWriter fw = new FileWriter("output.txt");){
 					
 					if(args.length == 1) {					//PATH IF FILE NAME IS ENTERED AT CLI
 						
-						BufferedReader reader = new BufferedReader(new FileReader(args[0]));
 						data = reader.readLine();
 						while(reader.readLine() != null) {
 							data.concat(reader.readLine());
 						}
 						
 						String outToFile = new Boolean(isLegitimate(data)).toString();
-						FileWriter fw = new FileWriter("output.txt");
 						fw.write(outToFile);
-						fw.close();
 							
 					} else if (args.length == 3) {			//PATH IF THREE ENTRIES ARE ENTERED AT CLI
 						String input = args[0] + " " + args[1] + " " + args[2];
@@ -76,10 +74,7 @@ public class WordShuffle {
 						System.out.println(isLegitimate(input));
 						
 						String outToFile = new Boolean(isLegitimate(input)).toString();
-						FileWriter fw = new FileWriter("output.txt");
-						fw.write(outToFile);
-						fw.close();
-						
+						fw.write(outToFile);						
 						
 					} else {		//ERROR MESSAGE/INSTRUCTIONS
 						System.out.println("When running the program enter either the input file name as a command line argument or "
@@ -90,7 +85,10 @@ public class WordShuffle {
 					
 					e.printStackTrace();
 				}	
-		
+			} else {
+				System.out.println("When running the program enter either the input file name as a command line argument or "
+						+ "three entries seperated by spaces to check if they are a legitimate shuffle group");
+			}
 	}
 
 }
